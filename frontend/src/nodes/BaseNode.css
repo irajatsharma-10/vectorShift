@@ -1,0 +1,21 @@
+/* BaseNode.css — Single source of truth for all node styling */
+
+.base-node {
+  width: 200px;
+  min-height: 80px;
+  border: 1px solid black;
+  background: white;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+}
+
+.base-node__title {
+  font-weight: 600;
+  padding: 4px 8px;
+}
+
+.base-node__content {
+  padding: 4px 8px;
+  flex: 1;
+}
