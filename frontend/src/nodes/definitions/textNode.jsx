@@ -2,8 +2,13 @@
 
 import { useState } from 'react';
 import { useStore } from '../../store';
+import { BaseNode } from '../BaseNode';
 
-const TextNodeContent = ({ id, data }) => {
+export const type = 'text';
+export const label = 'Text';
+
+export const TextNode = (props) => {
+  const { id, data } = props;
   const updateNodeField = useStore((s) => s.updateNodeField);
   const [currText, setCurrText] = useState(data?.text || '{{input}}');
 
@@ -13,19 +18,15 @@ const TextNodeContent = ({ id, data }) => {
   };
 
   return (
-    <label>
-      Text:
-      <input type="text" value={currText} onChange={handleTextChange} />
-    </label>
+    <BaseNode 
+      id={id}
+      title="Text" 
+      handles={[{ type: 'source', position: 'right', id: 'output' }]}
+    >
+      <label>
+        Text:
+        <input type="text" value={currText} onChange={handleTextChange} />
+      </label>
+    </BaseNode>
   );
-};
-
-export const textNodeDefinition = {
-  type: 'text',
-  label: 'Text',
-  title: 'Text',
-  handles: [
-    { type: 'source', position: 'right', id: 'output' },
-  ],
-  renderContent: (props) => <TextNodeContent {...props} />,
 };

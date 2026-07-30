@@ -2,8 +2,13 @@
 
 import { useState } from 'react';
 import { useStore } from '../../store';
+import { BaseNode } from '../BaseNode';
 
-const OutputNodeContent = ({ id, data }) => {
+export const type = 'customOutput';
+export const label = 'Output';
+
+export const OutputNode = (props) => {
+  const { id, data } = props;
   const updateNodeField = useStore((s) => s.updateNodeField);
   const [currName, setCurrName] = useState(
     data?.outputName || id.replace('customOutput-', 'output_')
@@ -21,28 +26,24 @@ const OutputNodeContent = ({ id, data }) => {
   };
 
   return (
-    <div>
-      <label>
-        Name:
-        <input type="text" value={currName} onChange={handleNameChange} />
-      </label>
-      <label>
-        Type:
-        <select value={outputType} onChange={handleTypeChange}>
-          <option value="Text">Text</option>
-          <option value="Image">Image</option>
-        </select>
-      </label>
-    </div>
+    <BaseNode 
+      id={id}
+      title="Output" 
+      handles={[{ type: 'target', position: 'left', id: 'value' }]}
+    >
+      <div>
+        <label>
+          Name:
+          <input type="text" value={currName} onChange={handleNameChange} />
+        </label>
+        <label>
+          Type:
+          <select value={outputType} onChange={handleTypeChange}>
+            <option value="Text">Text</option>
+            <option value="Image">Image</option>
+          </select>
+        </label>
+      </div>
+    </BaseNode>
   );
-};
-
-export const outputNodeDefinition = {
-  type: 'customOutput',
-  label: 'Output',
-  title: 'Output',
-  handles: [
-    { type: 'target', position: 'left', id: 'value' },
-  ],
-  renderContent: (props) => <OutputNodeContent {...props} />,
 };
