@@ -38,3 +38,10 @@ npm-debug.log*
 
 # Testing
 coverage/
+
+# Backup archives
+*.zip
+
+# md (allow README)
+*.md
+!README.md
