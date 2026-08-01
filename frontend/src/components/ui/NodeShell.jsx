@@ -19,7 +19,7 @@ const POSITION_MAP = {
   bottom: Position.Bottom,
 };
 
-export const NodeShell = ({ id, data, title, handles, children, icon: Icon, colorMode = 'primary' }) => {
+export const NodeShell = ({ id, data, title, handles, children, icon: Icon, colorMode = 'primary', width }) => {
   const removeNode = useStore((state) => state.removeNode);
 
   // Group handles by position for auto-distribution
@@ -76,7 +76,10 @@ export const NodeShell = ({ id, data, title, handles, children, icon: Icon, colo
   const footerBgClass = isAmber ? 'border-amber-200 dark:border-amber-500/20 bg-amber-100/50 dark:bg-amber-950/40' : 'border-neutral-200 dark:border-[#27272A] bg-neutral-50 dark:bg-[#09090B]';
 
   return (
-    <div className={`w-[300px] rounded-xl shadow-node-light dark:shadow-node-dark flex flex-col transition-all duration-300 group relative hover:shadow-[0_0_30px_rgba(139,92,246,0.2)] dark:hover:shadow-[0_0_30px_rgba(139,92,246,0.4)]`}>
+    <div
+      className={`rounded-xl shadow-node-light dark:shadow-node-dark flex flex-col transition-all duration-300 group relative hover:shadow-[0_0_30px_rgba(139,92,246,0.2)] dark:hover:shadow-[0_0_30px_rgba(139,92,246,0.4)] ${width ? '' : 'w-[300px]'}`}
+      style={width ? { width: `${width}px` } : undefined}
+    >
       
       {/* Rotating Border Element (Visible only when selected) */}
       <div className="absolute -inset-[2px] rounded-2xl overflow-hidden opacity-0 [.react-flow__node.selected_&]:opacity-100 transition-opacity duration-300 z-0 pointer-events-none">

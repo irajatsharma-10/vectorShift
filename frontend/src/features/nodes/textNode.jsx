@@ -22,11 +22,16 @@ export const TextNode = (props) => {
 
   const [currText, setCurrText] = useState(data?.text || 'Enter the text');
   const [variables, setVariables] = useState([]);
+  const [nodeWidth, setNodeWidth] = useState(300);
 
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+
+      textareaRef.current.style.width = 'auto';
+      const contentWidth = Math.max(textareaRef.current.scrollWidth, 200);
+      setNodeWidth(Math.min(Math.max(contentWidth + 48, 240), 480));
     }
   }, [currText]);
 
@@ -65,6 +70,7 @@ export const TextNode = (props) => {
       title="Text" 
       icon={Type}
       handles={handles}
+      width={nodeWidth}
     >
       <div className="flex flex-col gap-2 min-w-[200px]">
         <div className="flex flex-col gap-1">
