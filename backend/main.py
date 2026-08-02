@@ -11,7 +11,7 @@ from fastapi import FastAPI, Form
 from fastapi.middleware.cors import CORSMiddleware
 from config import settings
 from models import Pipeline
-from pipeline import analyze_pipeline
+from pipeline import analyze_pipeline, execute_pipeline
 
 app = FastAPI(title=settings.PROJECT_NAME)
 
@@ -35,4 +35,14 @@ def parse_pipeline(pipeline: str = Form(...)):
     
     # Perform business logic
     result = analyze_pipeline(pipeline_model)
+    return result
+
+@app.post('/pipelines/execute', tags=["pipelines"])
+def execute_pipeline_route(pipeline: str = Form(...)):
+    # Parse the raw JSON string into our Pydantic model
+    pipeline_dict = json.loads(pipeline)
+    pipeline_model = Pipeline(**pipeline_dict)
+    
+    # Perform execution logic
+    result = execute_pipeline(pipeline_model)
     return result

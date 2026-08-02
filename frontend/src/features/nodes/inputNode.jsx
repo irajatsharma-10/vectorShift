@@ -60,6 +60,16 @@ export const InputNode = (props) => {
             <option value="Audio">Audio</option>
           </select>
         </div>
+        <div className="flex flex-col gap-1">
+          <label className="text-[11px] font-semibold text-neutral-600 dark:text-neutral-300">Value (for prototype execution)</label>
+          <input
+            type="text"
+            value={data?.inputValue || ''}
+            onChange={(e) => updateNodeField(id, 'inputValue', e.target.value)}
+            className="w-full bg-neutral-100 dark:bg-[#18181B] border border-neutral-300 dark:border-[#27272A] rounded-md px-2 py-1.5 text-xs text-neutral-800 dark:text-neutral-200 outline-none focus:border-emerald-500 transition-colors font-mono"
+            placeholder="Static input value..."
+          />
+        </div>
       </div>
     </NodeShell>
   );

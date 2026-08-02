@@ -9,7 +9,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useStore } from '../../store';
 import { shallow } from 'zustand/shallow';
-import { analyzePipeline } from '../../services/api';
+import { analyzePipeline, executePipeline } from '../../services/api';
 import { toast } from 'sonner';
 import { Play, Loader2 } from 'lucide-react';
 
@@ -27,21 +27,21 @@ export const RunWorkflowButton = () => {
         setIsLoading(true);
         
         try {
-            const result = await analyzePipeline(nodes, edges);
+            const result = await executePipeline(nodes, edges);
             
-            if (result.is_dag) {
-                toast.success('Pipeline Analyzed', {
-                    description: `Nodes: ${result.num_nodes} | Edges: ${result.num_edges} | Valid DAG: Yes`
+            if (result.status === 'success') {
+                toast.success('Execution Complete', {
+                    description: `Output: ${result.output}`
                 });
             } else {
-                toast.error('Invalid Pipeline', {
-                    description: `Nodes: ${result.num_nodes} | Edges: ${result.num_edges} | Valid DAG: No (Circular Dependency Detected)`
+                toast.error('Execution Failed', {
+                    description: result.message || 'Pipeline failed to execute.'
                 });
             }
         } catch (error) {
             console.error('Submission failed:', error);
             toast.error('Connection Failed', {
-                description: 'Failed to analyze pipeline. Ensure the backend is running on port 8000.'
+                description: 'Failed to execute pipeline. Ensure the backend is running on port 8000.'
             });
         } finally {
             setIsLoading(false);

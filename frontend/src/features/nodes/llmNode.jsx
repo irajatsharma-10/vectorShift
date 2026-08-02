@@ -17,14 +17,8 @@ export const LLMNode = (props) => {
   const { id, data } = props;
   const updateNodeField = useStore((s) => s.updateNodeField);
   
-  const [model, setModel] = useState(data?.model || 'gpt-4o');
   const [systemPrompt, setSystemPrompt] = useState(data?.systemPrompt || 'You are a helpful assistant.');
   const [temperature, setTemperature] = useState(data?.temperature || 0.7);
-
-  const handleModelChange = (e) => {
-    setModel(e.target.value);
-    updateNodeField(id, 'model', e.target.value);
-  };
 
   const handlePromptChange = (e) => {
     setSystemPrompt(e.target.value);
@@ -49,20 +43,7 @@ export const LLMNode = (props) => {
       ]}
     >
       <div className="flex flex-col gap-3">
-        <div className="flex flex-col gap-1">
-          <label className="text-xs font-semibold text-neutral-600 dark:text-neutral-300">Model</label>
-          <select 
-            value={model} 
-            onChange={handleModelChange}
-            className="w-full bg-neutral-100 dark:bg-[#18181B] border border-neutral-300 dark:border-[#27272A] rounded-md px-2 py-1.5 text-xs text-neutral-800 dark:text-neutral-200 outline-none focus:border-purple-500 transition-colors"
-          >
-            <option value="gpt-4o">GPT-4o</option>
-            <option value="gpt-4-turbo">GPT-4 Turbo</option>
-            <option value="claude-3-5-sonnet">Claude 3.5 Sonnet</option>
-            <option value="claude-3-opus">Claude 3 Opus</option>
-            <option value="llama-3-70b">Llama 3 70B</option>
-          </select>
-        </div>
+
 
         <div className="flex flex-col gap-1">
           <label className="text-xs font-semibold text-neutral-600 dark:text-neutral-300">System Prompt</label>

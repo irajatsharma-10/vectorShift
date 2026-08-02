@@ -30,3 +30,19 @@ export const analyzePipeline = async (nodes, edges) => {
 
     return await response.json();
 };
+
+export const executePipeline = async (nodes, edges) => {
+    const formData = new FormData();
+    formData.append('pipeline', JSON.stringify({ nodes, edges }));
+
+    const response = await fetch(`${API_BASE_URL}/pipelines/execute`, {
+        method: 'POST',
+        body: formData,
+    });
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    return await response.json();
+};
